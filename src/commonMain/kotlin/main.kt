@@ -2,6 +2,7 @@ import com.soywiz.klock.*
 import com.soywiz.korev.Key
 import com.soywiz.korge.*
 import com.soywiz.korge.tween.*
+import com.soywiz.korge.ui.UiSkinType.Companion.DOWN
 import com.soywiz.korge.view.*
 import com.soywiz.korim.atlas.Atlas
 import com.soywiz.korim.atlas.readAtlas
@@ -19,6 +20,8 @@ suspend fun main() = Korge(width = 512, height = 512, bgcolor = Colors["#2b2b2b"
 
 	val idleAnimation:SpriteAnimation = adventurerSprites.getSpriteAnimation(prefix = "idle")
 	val walkReadyAnimation:SpriteAnimation = adventurerSprites.getSpriteAnimation(prefix = "walk")
+	val walkBackReadyAnimation:SpriteAnimation = adventurerSprites.getSpriteAnimation(prefix = "walk")
+	val downReadyAnimation:SpriteAnimation = adventurerSprites.getSpriteAnimation(prefix = "down")
 	val attackReadyAnimation:SpriteAnimation = adventurerSprites.getSpriteAnimation(prefix = "attack-ready")
 
 	val adventurer: Sprite = sprite(idleAnimation).scale(4.0).xy(100.0, 100.0)
@@ -31,8 +34,12 @@ suspend fun main() = Korge(width = 512, height = 512, bgcolor = Colors["#2b2b2b"
 	addUpdater {
 		if (views.input.keys.pressing(Key.A)) {
 			playerStatusPlayAnimation(adventurer, attackReadyAnimation, PlayerStatus.ATTACK_READY)
-		} else if (views.input.keys.pressing(Key.SPACE)) {
+		} else if (views.input.keys.pressing(Key.RIGHT)) {
 			playerStatusPlayAnimation(adventurer, walkReadyAnimation, PlayerStatus.WALK)
+		} else if (views.input.keys.pressing(Key.LEFT)) {
+			playerStatusPlayAnimation(adventurer, walkBackReadyAnimation, PlayerStatus.WALKBACK)
+		} else if (views.input.keys.pressing(Key.DOWN)) {
+			playerStatusPlayAnimation(adventurer, downReadyAnimation, PlayerStatus.DOWN)
 		} else {
 			playerStatusPlayAnimation(adventurer, idleAnimation, PlayerStatus.IDLE)
 		}
@@ -49,6 +56,13 @@ fun playerStatusPlayAnimation(sprite: Sprite, animation: SpriteAnimation, paramP
 		PlayerStatus.WALK -> {
 			sprite.playAnimation(animation)
 			sprite.x += 2
+		}
+		PlayerStatus.WALKBACK -> {
+		sprite.playAnimation(animation)
+		sprite.x -= 2
+		}
+		PlayerStatus.DOWN -> {
+			sprite.playAnimationLooped(animation)
 		}
 		PlayerStatus.ATTACK_READY -> {
 			sprite.playAnimation(animation)
