@@ -12,28 +12,6 @@ import com.soywiz.korio.file.std.*
 import com.soywiz.korma.geom.*
 import com.soywiz.korma.interpolation.*
 
-//suspend fun main() = Korge(width = 512, height = 512, bgcolor = Colors["#2b2b2b"]) {
-//	val spriteMap: Bitmap = resourcesVfs["adventure2r.png"].readBitmap()
-//
-//
-//	val animation = SpriteAnimation(
-//		spriteMap = spriteMap,
-//		spriteWidth = 128,
-//		spriteHeight = 128,
-//		marginTop = 0,
-//		marginLeft = 100,
-//		columns = 7,
-//		rows = 1,
-//		offsetBetweenColumns = 0,
-//		offsetBetweenRows = 0
-//	)
-//
-//	val sprite:Sprite = sprite(animation)
-//	sprite.playAnimationLooped()
-//}
-
-
-
 var playerStatus: PlayerStatus = PlayerStatus.IDLE
 
 suspend fun main() = Korge(width = 512, height = 512, bgcolor = Colors["#2b2b2b"]) {
